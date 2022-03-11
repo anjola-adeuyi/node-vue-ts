@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
+import { routes } from './routes';
 
 const app = express();
 
@@ -8,9 +9,7 @@ app.use(cors({
   origin: ["http://localhost:3000"]
 }));
 
-app.get('/', (req: Request, res: Response)=> {
-  res.send("Hello World")
-});
+routes(app);
 
 const port = 8000;
 
