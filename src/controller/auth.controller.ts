@@ -93,3 +93,7 @@ export const UpdateInfo = async (req: Request, res: Response) => {
 
   res.send(data);
 }
+
+export const UpdatePassword = async (req: Request, res: Response) => {
+
+}
