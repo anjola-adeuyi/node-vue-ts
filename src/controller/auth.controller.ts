@@ -3,7 +3,7 @@ import { getManager } from "typeorm";
 import bcryptjs from 'bcryptjs';
 import { User } from "../entity/user.entity";
 import { RegisterValidation } from "../validation/register.validation";
-import { sign } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 
 export const Register = async (req: Request, res: Response) => {
   const { body } = req;
@@ -66,4 +66,22 @@ export const Login = async (req: Request, res: Response) => {
   res.send({
     message: "success"
   });
+}
+
+export const AuthenticatedUser = async (req: Request, res: Response) => {
+  const jwt = req.cookies['jwt'];
+
+  const payload: any = verify(jwt, "secret");
+
+  if(!payload) {
+    return res.status(401).send({
+      message: "unauthenticated"
+    })
+  }
+
+  const repository = getManager().getRepository(User);
+
+  const {password, ...user} = await repository.findOne(payload.id)
+
+  res.send(user);
 }
