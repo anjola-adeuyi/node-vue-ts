@@ -95,5 +95,22 @@ export const UpdateInfo = async (req: Request, res: Response) => {
 }
 
 export const UpdatePassword = async (req: Request, res: Response) => {
+  const {body} = req;
+  const user = req['user'];
 
+  if (body && body.password !== body.password_confirm) {
+    res.status(400).send({
+      message: "passwords do not match"
+    })
+  }
+
+  const repository = getManager().getRepository(User);
+
+  await repository.update(user.id, {
+    password: await bcryptjs.hash(body.password, 10)
+  });
+
+  const {password, ...data} = user;
+
+  res.send(data);
 }

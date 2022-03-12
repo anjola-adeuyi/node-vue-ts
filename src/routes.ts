@@ -9,7 +9,7 @@ export const routes = (router: Router) => {
   router.get('/api/user', AuthMiddleware, AuthenticatedUser );
   router.post('/api/logout', AuthMiddleware, Logout );
   router.put('/api/updateinfo', AuthMiddleware, UpdateInfo );
-  router.put('/api/updateinfo', AuthMiddleware, UpdatePassword );
+  router.put('/api/updatepassword', AuthMiddleware, UpdatePassword );
 
 
   router.get('/api/users', AuthMiddleware, Users );
